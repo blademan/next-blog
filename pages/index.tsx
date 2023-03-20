@@ -1,26 +1,23 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { getPosts } from '../lib/posts';
 
 
-export async function getStaticProps() {
-	const posts: PostTypes[] = await getPosts()
 
-	return {
-		props: { posts },
-	}
-}
-
-type PostTypes = {
+interface Post {
 	title: string;
 	date: string;
 	body: string;
 	slug: string;
 }
 
+interface Props {
+	posts: Post[]
+}
 
-const HomePage: NextPage<{ posts: PostTypes[] }> = ({ posts }) => {
+
+const HomePage: NextPage<Props> = ({ posts }) => {
 
 
 
@@ -45,3 +42,11 @@ const HomePage: NextPage<{ posts: PostTypes[] }> = ({ posts }) => {
 }
 
 export default HomePage
+
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+	const posts = await getPosts() ?? [];
+	return {
+		props: { posts },
+	};
+}

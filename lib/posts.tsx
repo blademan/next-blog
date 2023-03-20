@@ -1,15 +1,32 @@
-import { readdir, readFile } from 'fs/promises'
-import matter from 'gray-matter'
-import { marked } from 'marked'
+import { readdir, readFile } from 'fs/promises';
+import matter from 'gray-matter';
+import { marked } from 'marked';
 
-export async function getPost(slug) {
+
+
+type PostData = {
+	title: string;
+	date: string;
+	body: string;
+};
+
+type Post = {
+	slug: string;
+	PostData: PostData;
+};
+
+type Slug = string | string[];
+
+export async function getPost(slug: Slug): Promise<PostData> {
 	const source = await readFile(`content/posts/${slug}.md`, 'utf8')
 
 	const {
 		data: { date, title },
 		content,
 	} = matter(source)
+
 	const body = marked(content)
+
 	return {
 		title,
 		date,
@@ -29,7 +46,7 @@ export async function getPosts() {
 	return posts
 }
 
-export async function getSlugs() {
+export async function getSlugs(): Promise<Slug[]> {
 	const suffix = '.md'
 	const files = await readdir('content/posts')
 	return files.filter(file => file.endsWith(suffix)).map(file => file.slice(0, -suffix.length))
