@@ -11,7 +11,7 @@ function loadDarkMode() {
 
 export default function ThemeButton() {
 	const [darkMode, setDarkMode] = useState(loadDarkMode)
-	console.log('[DarkMode]', darkMode)
+
 	const text = darkMode ? 'Dark Mode' : 'Light Mode'
 
 	const handleClick = () => {

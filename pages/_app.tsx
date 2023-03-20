@@ -1,8 +1,9 @@
-import Head from 'next/head'
-import NavBar from '../components/NavBar'
-import styles from '../styles/styles.css'
+import { AppProps } from 'next/app';
+import Head from 'next/head';
+import NavBar from '../components/NavBar';
+import '../styles/styles.css';
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
 	return (
 		<>
 			<Head>

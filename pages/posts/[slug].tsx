@@ -1,8 +1,18 @@
-import Head from 'next/head'
-import { getPost, getSlugs } from '../../lib/posts'
+import { NextPage } from 'next';
+import Head from 'next/head';
+import { getPost, getSlugs } from '../../lib/posts';
+
+type PostTypes = {
+	title: string;
+	date: string;
+	body: string;
+}
+
+type SlugTypes = string[]
+
 
 export async function getStaticPaths() {
-	const slugs = await getSlugs()
+	const slugs: SlugTypes = await getSlugs()
 	return {
 		paths: slugs.map(slug => ({
 			params: { slug },
@@ -12,13 +22,15 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }) {
-	const post = await getPost(slug)
+	const post: PostTypes = await getPost(slug)
 	return {
 		props: { post },
 	}
 }
 
-export default function PostPage({ post }) {
+const PostPage: NextPage<{ post: PostTypes }> = ({ post }) => {
+
+
 	return (
 		<>
 			<Head>
@@ -30,3 +42,4 @@ export default function PostPage({ post }) {
 		</>
 	)
 }
+export default PostPage

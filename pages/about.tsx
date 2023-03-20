@@ -1,7 +1,8 @@
+import { NextPage } from 'next'
 import Head from 'next/head'
 
-export default function about() {
-	console.log('[AboutPage] render')
+const AboutPage: NextPage = () => {
+
 	return (
 		<>
 			<Head>
@@ -14,3 +15,4 @@ export default function about() {
 		</>
 	)
 }
+export default AboutPage
